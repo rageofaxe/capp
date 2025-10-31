@@ -1,12 +1,12 @@
-import { Platform, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import styled from "styled-components/native";
-import PlaySVG from "../components/SVG/Play";
-import PauseSVG from "../components/SVG/Pause";
-import StopSVG from "../components/SVG/Stop";
-import RepairSVG from "../components/SVG/Repair";
-import UnknownSVG from "../components/SVG/Unknown";
 import { getAttentionLevel } from "../../utils";
+import PauseSVG from "../components/SVG/Pause";
+import PlaySVG from "../components/SVG/Play";
+import RepairSVG from "../components/SVG/Repair";
+import StopSVG from "../components/SVG/Stop";
+import UnknownSVG from "../components/SVG/Unknown";
 
 export default function VehicleMarker(props: { vehicle: App.Vehicle, onPress: any }) {
     
@@ -27,6 +27,9 @@ export default function VehicleMarker(props: { vehicle: App.Vehicle, onPress: an
 
     return (
         <Wrapper>
+            <View>
+                <Text>####</Text>
+            </View>
             <Buble>
                 <Content>
                     <Icon style={{ marginLeft: 4 }} color={iconColor} />
@@ -70,6 +73,7 @@ const Wrapper = styled.View`
     top: ${Platform.select({ android: "0px", ios: "-20px" })};
     padding: 0px;
     height: 80px;
+    width: 100px;
 `;
 
 const Content = styled.View`

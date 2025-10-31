@@ -1,4 +1,4 @@
-import BottomSheet, { BottomSheetModal } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Platform, StyleSheet, View } from "react-native";
 import "react-native-gesture-handler";
 
@@ -49,7 +49,7 @@ const PlatformProvider = ({ children }: any) => {
 }
 
 export default function VehicleListSheet(props: VehicleListSheetProps) {
-    
+
     const {
         bottomSheetListRef,
         openVehicle,
@@ -62,7 +62,7 @@ export default function VehicleListSheet(props: VehicleListSheetProps) {
     const { keyboardShown } = useKeyboard();
     const { shownFilters, vehiclesSnapIndex, isCountryList, isGroupList } = useUnit($ui);
 
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! VehicleListSheet", !isCountryList && !isGroupList)
+
 
     const DefaultRegionButton = useCallback(
         () => (
@@ -93,8 +93,8 @@ export default function VehicleListSheet(props: VehicleListSheetProps) {
     }
 
     return (
-        <PlatformProvider {...props}>
 
+        <PlatformProvider>
             <BottomSheet
                 ref={bottomSheetListRef}
                 index={vehiclesSnapIndex}
@@ -104,77 +104,77 @@ export default function VehicleListSheet(props: VehicleListSheetProps) {
                 handleComponent={DefaultRegionButton}
                 style={styles.bottomSheet}
             >
-                
-                {!isCountryList && !isGroupList && (
-                    <View
-                        style={
-                            {
-                                height: keyboardShown
-                                    ? DEFAULT_BSH_HEIGHT_WITH_KEYBOARD + 160
-                                    : vehiclesSnapIndex == 2
-                                        ? HEIGHT - DEFAULT_BSH_HEIGHT_DIFF + 50
-                                        : DEFAULT_BSH_HEIGHT - 20,
-                            }
-                        }
-                    >
+                <BottomSheetView>
+                    {!isCountryList && !isGroupList && (
                         <View
-                            style={{
-                                ...styles.vehicleListContainer,
-
-                                height: keyboardShown
-                                    ? DEFAULT_BSH_HEIGHT_WITH_KEYBOARD
-                                    : vehiclesSnapIndex == 2
-                                        ? HEIGHT - DEFAULT_BSH_HEIGHT_DIFF - Platform.select({android: 110, ios: 80})
-                                        : DEFAULT_BSH_HEIGHT + 40,
-                            }}
+                            style={
+                                {
+                                    height: keyboardShown
+                                        ? DEFAULT_BSH_HEIGHT_WITH_KEYBOARD + 160
+                                        : vehiclesSnapIndex == 2
+                                            ? HEIGHT - DEFAULT_BSH_HEIGHT_DIFF + 50
+                                            : DEFAULT_BSH_HEIGHT - 20,
+                                }
+                            }
                         >
-                            <VehicleList
-                                vehicles={vehicles}
-                                openVehicle={openVehicle}
-                            ></VehicleList>
+                            <View
+                                style={{
+                                    ...styles.vehicleListContainer,
+
+                                    height: keyboardShown
+                                        ? DEFAULT_BSH_HEIGHT_WITH_KEYBOARD
+                                        : vehiclesSnapIndex == 2
+                                            ? HEIGHT - DEFAULT_BSH_HEIGHT_DIFF - Platform.select({ android: 110, ios: 80 })
+                                            : DEFAULT_BSH_HEIGHT + 40,
+                                }}
+                            >
+                                <VehicleList
+                                    vehicles={vehicles}
+                                    openVehicle={openVehicle}
+                                ></VehicleList>
+                            </View>
+                            {shownFilters ? (
+                                <View style={styles.searchWrapper}>
+                                    <Filters toggleFilter={toggleFilters} />
+                                </View>
+                            ) : (
+                                <View style={styles.searchWrapper}>
+                                    <SearchBar
+                                        bottomSheetListRef={bottomSheetListRef}
+                                        setVehiclesSnapIndex={setVehiclesSnapIndex}
+                                    />
+
+                                    <BaseButton
+                                        active={false}
+                                        disabled={false}
+                                        count={1}
+                                        style={{ borderColor: "#6D6D6D" }}
+                                        onTouchEnd={toggleFilters}
+                                    >
+                                        <FiltersSvg />
+                                    </BaseButton>
+                                </View>
+                            )}
                         </View>
-                        {shownFilters ? (
-                            <View style={styles.searchWrapper}>
-                                <Filters toggleFilter={toggleFilters} />
-                            </View>
-                        ) : (
-                            <View style={styles.searchWrapper}>
-                                <SearchBar
-                                    bottomSheetListRef={bottomSheetListRef}
-                                    setVehiclesSnapIndex={setVehiclesSnapIndex}
-                                />
+                    )}
 
-                                <BaseButton
-                                    active={false}
-                                    disabled={false}
-                                    count={1}
-                                    style={{ borderColor: "#6D6D6D" }}
-                                    onTouchEnd={toggleFilters}
-                                >
-                                    <FiltersSvg />
-                                </BaseButton>
-                            </View>
-                        )}
-                    </View>
-                )}
+                    {isCountryList && (
+                        <CountryList
+                            styles={styles}
+                            isKeyBoard={keyboardShown}
+                            vehiclesSnapIndex={vehiclesSnapIndex}
+                        />
+                    )}
 
-                {isCountryList && (
-                    <CountryList
-                        styles={styles}
-                        isKeyBoard={keyboardShown}
-                        vehiclesSnapIndex={vehiclesSnapIndex}
-                    />
-                )}
-
-                {isGroupList && (
-                    <GroupList
-                        styles={styles}
-                        isKeyBoard={keyboardShown}
-                        vehiclesSnapIndex={vehiclesSnapIndex}
-                    />
-                )}
+                    {isGroupList && (
+                        <GroupList
+                            styles={styles}
+                            isKeyBoard={keyboardShown}
+                            vehiclesSnapIndex={vehiclesSnapIndex}
+                        />
+                    )}
+                </BottomSheetView>
             </BottomSheet>
-
         </PlatformProvider>
     );
 }

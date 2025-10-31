@@ -52,6 +52,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import VehicleListSheet from "../components/BottomSheets/VehicleListSheet";
+import VehicleSheet from "../components/BottomSheets/VehicleSheet";
 
 const INITIAL_REGION = {
     latitude: 52.5,
@@ -186,9 +187,11 @@ export default function App() {
         setSelectedHistoryItemId(`point${point.id}`);
     };
 
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAIN")
+
     return (
         <GestureHandlerRootView style={styles.container}>
-            <SafeAreaProvider style={{ flex: 1 }}>
+            <SafeAreaProvider style={styles.viewContainer}>
                 {isProgressBar && <View style={styles.progressbar}></View>}
                 <StatusBar style="dark" backgroundColor="#EAFAF1" />
 
@@ -227,7 +230,7 @@ export default function App() {
                     fitToSuppliedMarkers={fitToSuppliedMarkers}
                 />
 
-                {/* <VehicleSheet
+                <VehicleSheet
                     bottomSheetItemRef={bottomSheetItemRef}
                     index={vehicleSnapIndex}
                     snapPoints={snapPoints}
@@ -238,9 +241,9 @@ export default function App() {
                     vehicleSnapIndex={vehicleSnapIndex}
                     mapRef={mapRef}
                     openVehicle={openVehicle}
-                /> */}
+                />
 
-                <MapView
+                {true && <MapView
                     ref={mapRef}
                     initialRegion={INITIAL_REGION}
                     style={styles.mapIos}
@@ -399,7 +402,7 @@ export default function App() {
                                 </Marker>
                             );
                         })}
-                </MapView>
+                </MapView>}
             </SafeAreaProvider>
         </GestureHandlerRootView>
     );
@@ -415,9 +418,13 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        height: HEIGHT,
-        pointerEvents: "box-none"
+        // height: HEIGHT,
+        // pointerEvents: "box-none"
     },
+    viewContainer: { 
+        // flex: 1, 
+        // ...StyleSheet.absoluteFillObject, 
+        pointerEvents: "box-none" },
     mapIos: {
         ...StyleSheet.absoluteFillObject,
     },

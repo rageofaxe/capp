@@ -202,7 +202,7 @@ const useLiveMode = (
         console.log("LIVEMODE: ", isLiveMode, currentLiveMode)
         console.log("LIVEMODE DATA: ")
         console.log("LIVEMODE DATA: ", historyRouteLive.length, prevРistoryRouteLiveLength, prevРistoryRouteLiveLength !== historyRouteLive.length)
-        console.log(">>>", currentLiveMode === LiveModes.POINT_IN_CENTER_WITH_SEGMENT && prevРistoryRouteLiveLength !== historyRouteLive.length)
+        
         if (currentView === "History") {
             // LIVEMODE
             if (historyRouteLive?.length > 1 && isLiveMode) {
@@ -542,10 +542,12 @@ export default function VehicleSheet(props: VehicleSheetProps) {
             }
         }
     };
-
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! VehicleShee1t", !!vehicle)
     if (!vehicle) {
         return null
     }
+
+    
 
     return (
         <PlatformProvider>
