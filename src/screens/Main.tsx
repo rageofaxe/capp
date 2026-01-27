@@ -83,6 +83,8 @@ export default function App() {
         closeVehicle,
     } = useApp();
 
+    console.log("vehiclesSnapIndex", vehiclesSnapIndex, bottomSheetListRef.current)
+
     const statusSorting = useUnit($statusSorting);
     const numberSorting = useUnit($numberSorting);
     const isProgressBar = useUnit($isProgressBar);
@@ -187,7 +189,7 @@ export default function App() {
         setSelectedHistoryItemId(`point${point.id}`);
     };
 
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAIN")
+
 
     return (
         <GestureHandlerRootView style={styles.container}>
@@ -220,29 +222,7 @@ export default function App() {
                     <ReloadSvg />
 
                 </RoundButton>
-
-                <VehicleListSheet
-                    bottomSheetListRef={bottomSheetListRef}
-                    snapPoints={snapPoints}
-                    openVehicle={openVehicle}
-                    vehicles={vehicles}
-                    vehicleId={vehicleId}
-                    fitToSuppliedMarkers={fitToSuppliedMarkers}
-                />
-
-                <VehicleSheet
-                    bottomSheetItemRef={bottomSheetItemRef}
-                    index={vehicleSnapIndex}
-                    snapPoints={snapPoints}
-                    onChange={handleSheetVehicleChanges}
-                    vehicles={vehicles}
-                    vehicleId={vehicleId}
-                    closeVehicle={closeVehicle}
-                    vehicleSnapIndex={vehicleSnapIndex}
-                    mapRef={mapRef}
-                    openVehicle={openVehicle}
-                />
-
+                
                 {true && <MapView
                     ref={mapRef}
                     initialRegion={INITIAL_REGION}
@@ -403,6 +383,29 @@ export default function App() {
                             );
                         })}
                 </MapView>}
+
+                <VehicleListSheet
+                    bottomSheetListRef={bottomSheetListRef}
+                    snapPoints={snapPoints}
+                    openVehicle={openVehicle}
+                    vehicles={vehicles}
+                    vehicleId={vehicleId}
+                    fitToSuppliedMarkers={fitToSuppliedMarkers}
+                />
+
+                <VehicleSheet
+                    bottomSheetItemRef={bottomSheetItemRef}
+                    index={vehicleSnapIndex}
+                    snapPoints={snapPoints}
+                    onChange={handleSheetVehicleChanges}
+                    vehicles={vehicles}
+                    vehicleId={vehicleId}
+                    closeVehicle={closeVehicle}
+                    vehicleSnapIndex={vehicleSnapIndex}
+                    mapRef={mapRef}
+                    openVehicle={openVehicle}
+                />
+                
             </SafeAreaProvider>
         </GestureHandlerRootView>
     );
@@ -422,11 +425,12 @@ const styles = StyleSheet.create({
         // pointerEvents: "box-none"
     },
     viewContainer: { 
-        // flex: 1, 
+        flex: 1, 
         // ...StyleSheet.absoluteFillObject, 
         pointerEvents: "box-none" },
     mapIos: {
         ...StyleSheet.absoluteFillObject,
+        flex: 1
     },
     mapAndroid: {
         width: WIDTH,

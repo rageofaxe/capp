@@ -1,14 +1,39 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createEffect, createEvent, createStore } from "effector";
-import app from "../../../app.json";
 import { NativeModules, Platform } from "react-native";
+import app from "../../../app.json";
 import { getVehicleRouteFx } from "../history/model";
 
 const BASE_URL = "https://app.transinet.eu/";
 
+function coupleVehicles(result: App.Vehicles) {
+    const { trucks, trailers, couplings } = result;
+    
+    // Create a map for quick lookup of vehicles by id
+    const truckMap = new Map(trucks.map((truck: any) => [truck.id, truck]));
+    const trailerMap = new Map(trailers.map((trailer: any) => [trailer.id, trailer]));
+
+    // Process each coupling
+    
+    couplings.forEach((coupling: any) => {
+        const truck: any = truckMap.get(coupling.truck_id);
+        const trailer = trailerMap.get(coupling.trailer_id);
+
+        if (truck && trailer) {
+            truck.trailer = trailer;
+
+            // Add truck to trailer
+            //trailer.truck = (truck);
+        }
+    });
+    
+    return result;
+}
+
 export const $vehicles = createStore<App.Vehicles>({
     trucks: [],
     trailers: [],
+    couplings: []
 });
 
 export const $currentVehicle = createStore<App.Vehicle | null>(null);
@@ -71,7 +96,7 @@ export const getVehicleDataFx = createEffect(async ({ vehicleId, vehicleType }: 
         }
     ).then((result: any) => result.json());
 
-    return result;
+    return result
 });
 
 export const getVehiclesFx = createEffect<any, App.Vehicles, any>(async () => {    
@@ -86,7 +111,8 @@ export const getVehiclesFx = createEffect<any, App.Vehicles, any>(async () => {
             Cookie: cookie,
         },
     }).then((result: any) => result.json());
-    return result;
+
+    return coupleVehicles(result);
 });
 
 export const authFx = createEffect(async ({ login, password }: App.Credential) => {

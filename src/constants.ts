@@ -15,6 +15,11 @@ export const DEFAULT_BSH_HEIGHT = Platform.select({
     ios: DBHF.ios + 110,
 }) as number;
 
+export const DEFAULT_BSH_HEIGHT_NEW = Platform.select({
+    android: 400,
+    ios: DBHF.ios + 110,
+}) as number;
+
 export const DEFAULT_BSH_HEIGHT_DIFF = Platform.select({
     android: DBHF.android,
     ios: DBHF.ios,

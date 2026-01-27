@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createEffect, createEvent, createStore, combine, sample } from "effector";
+import { combine, createEffect, createEvent, createStore, sample } from "effector";
 import { BASE_URL } from "../../../constants";
+import { $vehicles } from "../../vehicles/model";
 import {
     $dateFrom,
     $historyRoute,
@@ -9,7 +10,6 @@ import {
     enableAutoUpdate,
     getVehicleRouteFx,
 } from "../model";
-import { $vehicles } from "../../vehicles/model";
 
 const getOptions = (cookie: string): any => ({
     method: "GET",
@@ -30,6 +30,7 @@ export const incAutoUpdate = createEvent();
 export const getVehicleRouteLiveFx = createEffect(
     async ({ id, dateFrom, vehicleType }: any) => {
         const cookie = (await AsyncStorage.getItem("cookie")) as string;
+        console.log("ROUTE!!!!!!!", `${BASE_URL}new_map/statuses/${vehicleType}/${id}?q%5Bfrom%5D=${dateFrom}&q%5Bto%5D=${dateFrom}&page=1`)
         const route = await fetch(
             `${BASE_URL}new_map/statuses/${vehicleType}/${id}?q%5Bfrom%5D=${dateFrom}&q%5Bto%5D=${dateFrom}&page=1`,
             getOptions(cookie)

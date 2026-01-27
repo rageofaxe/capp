@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createEffect, createEvent, createStore } from "effector";
-import { BASE_URL } from "../../constants";
 import moment from "moment";
+import { BASE_URL } from "../../constants";
 import { setLiveMode } from "../modes";
 import { getVehiclePointsHelper } from "./helpers";
 
@@ -22,12 +22,13 @@ const getOptions = (cookie: string): any => ({
 
 async function getStatuses(vehicleType: any, id: any, dateFrom: string, page = 1, initialStatuses: any[] = []): Promise<any[]> {
   const cookie = (await AsyncStorage.getItem("cookie")) as string;
-
+  console.log("getStatuses", `${BASE_URL}new_map/statuses/${vehicleType}/${id}?q%5Bfrom%5D=${dateFrom}&q%5Bto%5D=${dateFrom}&page=${page}`)
   let statuses = await fetch(
     `${BASE_URL}new_map/statuses/${vehicleType}/${id}?q%5Bfrom%5D=${dateFrom}&q%5Bto%5D=${dateFrom}&page=${page}`,
     getOptions(cookie),
   ).then((result: any) => result.json());
-
+  
+  console.log("RESULT", statuses)
   if (statuses.length === page * 5000) {
     return getStatuses(vehicleType, id, dateFrom, page + 1, [...initialStatuses, ...statuses])
   } else {

@@ -35,8 +35,8 @@ $isCountryList.on([setCountry, closeFilters], () => false);
 $isGroupList.on(setGroupList, (_, payload) => payload);
 $isGroupList.on([setGroup, closeFilters], () => false);
 
-$vehiclesSnapIndex.on(setVehiclesSnapIndex, (_, payload) => payload);
-$vehicleSnapIndex.on(setVehicleSnapIndex, (_, value) => value);
+$vehiclesSnapIndex.on(setVehiclesSnapIndex, (_, payload) => payload >= 2 ? 2 : payload);
+$vehicleSnapIndex.on(setVehicleSnapIndex, (_, payload) => payload >= 2 ? 2 : payload);
 $vehicleId.on(setVehicleId, (_, payload) => payload);
 
 

@@ -55,6 +55,8 @@ namespace App {
     autotrips_in_month: any;
     has_online_drivers: any;
     body_kind: any;
+    truck?: Vehicle;
+    trailer?: Vehicle;
     partner: any;
     odometer_stats: any;
     last_auto_trip: any;
@@ -139,7 +141,7 @@ namespace App {
   export type Vehicles = {
     trucks: Truck[];
     trailers: Trailer[];
-    couples?: Couple[];
+    couplings: Couple[];
   };
 
   // export type Vehicle = Truck | Trailer

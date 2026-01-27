@@ -1,6 +1,6 @@
+import { View } from "react-native";
 import styled from "styled-components/native";
-import VehiclesSVG from "./SVG/Vehicles"
-import { getAttentionLevel } from "../../utils";
+import VehiclesSVG from "./SVG/Vehicles";
 
 type Props = {
     vehicle: App.Vehicle;
@@ -8,28 +8,45 @@ type Props = {
 
 export default (props: Props) => {
     const {
-        vehicle: { country, registration_number, company, model, make, single_svg_id, activity },
+        vehicle: { country, registration_number, company, model, make, single_svg_id, activity, trailer },
     } = props;
 
     const iconName = single_svg_id.replaceAll("-", "__").replaceAll(".", "") as keyof typeof VehiclesSVG
+    const iconTrailerName = trailer?.single_svg_id.replaceAll("-", "__").replaceAll(".", "") as keyof typeof VehiclesSVG
 
     const VehicleIcon = VehiclesSVG[iconName]
+    const VehicleTrailerIcon = VehiclesSVG[iconTrailerName]
 
     return (
         <Card>
             <Row>
                 <Col>
-                    <RegNumberView>
-                        {country?.iso2 && (
-                            <CountryCodeView>
-                                <CountryCode>{country?.iso2}</CountryCode>
-                            </CountryCodeView>
-                        )}
-                        <RegNumber>{registration_number}</RegNumber>
-                    </RegNumberView>                    
+                    <View style={{ flexDirection: "row", gap: 8 }}>
+                        <RegNumberView>
+                            {country?.iso2 && (
+                                <CountryCodeView>
+                                    <CountryCode>{country?.iso2}</CountryCode>
+                                </CountryCodeView>
+                            )}
+                            <RegNumber>{registration_number}</RegNumber>
+
+                        </RegNumberView>
+                        {trailer && <RegNumberView>
+                            {trailer?.country?.iso2 && (
+                                <CountryCodeView>
+                                    <CountryCode>{trailer?.country?.iso2}</CountryCode>
+                                </CountryCodeView>
+                            )}
+                            <RegNumber>{trailer?.registration_number}</RegNumber>
+
+                        </RegNumberView>}
+                    </View>
                 </Col>
                 <Col>
-                    <VehicleIcon height="25" width="50" preserveAspectRatio="xMinYMin slice"  />
+                    <View style={{ flexDirection: "row" }}>
+                        <VehicleIcon height="25" width="50" preserveAspectRatio="xMinYMin slice" />
+                        {trailer && <VehicleTrailerIcon height="25" width="50" preserveAspectRatio="xMinYMin slice" />}
+                    </View>
                 </Col>
             </Row>
         </Card>

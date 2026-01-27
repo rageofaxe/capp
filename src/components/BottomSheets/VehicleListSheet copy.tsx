@@ -8,7 +8,6 @@ import { useCallback } from "react";
 import {
     DEFAULT_BSH_HEIGHT,
     DEFAULT_BSH_HEIGHT_DIFF,
-    DEFAULT_BSH_HEIGHT_NEW,
     DEFAULT_BSH_HEIGHT_WITH_KEYBOARD,
     HEIGHT,
     Z_INDEXES,
@@ -40,6 +39,7 @@ type VehicleListSheetProps = {
 };
 
 export default function VehicleListSheet(props: VehicleListSheetProps) {
+
     const {
         bottomSheetListRef,
         openVehicle,
@@ -76,12 +76,13 @@ export default function VehicleListSheet(props: VehicleListSheetProps) {
     );
 
     if (vehicleId !== null) {
+
         return
     }
 
+    console.log("VEHICLE vehiclesSnapIndex", vehiclesSnapIndex)
+
     return (
-
-
         <BottomSheet
             ref={bottomSheetListRef}
             index={vehiclesSnapIndex}
@@ -91,7 +92,7 @@ export default function VehicleListSheet(props: VehicleListSheetProps) {
             handleComponent={DefaultRegionButton}
             style={styles.bottomSheet}
         >
-            <BottomSheetView>
+            <BottomSheetView >
                 {!isCountryList && !isGroupList && (
                     <View
                         style={
@@ -100,7 +101,7 @@ export default function VehicleListSheet(props: VehicleListSheetProps) {
                                     ? DEFAULT_BSH_HEIGHT_WITH_KEYBOARD + 160
                                     : vehiclesSnapIndex == 2
                                         ? HEIGHT - DEFAULT_BSH_HEIGHT_DIFF + 50
-                                        : DEFAULT_BSH_HEIGHT_NEW
+                                        : DEFAULT_BSH_HEIGHT - 20,
                             }
                         }
                     >
@@ -111,7 +112,7 @@ export default function VehicleListSheet(props: VehicleListSheetProps) {
                                 height: keyboardShown
                                     ? DEFAULT_BSH_HEIGHT_WITH_KEYBOARD
                                     : vehiclesSnapIndex == 2
-                                        ? HEIGHT - DEFAULT_BSH_HEIGHT_DIFF - (Platform.select({ android: 110, ios: 80 }) || 0)
+                                        ? HEIGHT - DEFAULT_BSH_HEIGHT_DIFF - Platform.select({ android: 110, ios: 80 })
                                         : DEFAULT_BSH_HEIGHT + 40,
                             }}
                         >
@@ -170,12 +171,12 @@ const styles = StyleSheet.create({
         pointerEvents: "box-none",
         flex: 1,
         zIndex: Z_INDEXES.BOTTOM_SHEET,
-        // backgroundColor: "#ffff0022"
     },
 
     bottomSheet: {
-        display: "flex",
-        flex: 1
+        // display: "flex",
+        // flex: 1
+        zIndex: 5,
     },
     vehicleListContainer: {
         margin: 16,

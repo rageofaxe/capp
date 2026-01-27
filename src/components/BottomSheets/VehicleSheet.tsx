@@ -1,4 +1,4 @@
-import BottomSheet, { BottomSheetModal } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
     AppState,
@@ -19,7 +19,6 @@ import DriverInfo from "../DriverInfo";
 import RoundButton from "../RoundButton";
 import CloseSvg from "../SVG/CloseIcon";
 import TripInfo from "../TripInfo";
-import VehicleInfo from "../VehicleInfo";
 
 import TargetSVG from "../../components/SVG/Target";
 import {
@@ -61,6 +60,7 @@ import {
     getVehicleFx,
 } from "../../models/vehicles/model";
 import { getEdgePadding } from "../../utils";
+import VehicleInfo from "../VehicleInfo";
 
 type VehicleSheetProps = {
     vehicles: App.Vehicle[];
@@ -202,7 +202,7 @@ const useLiveMode = (
         console.log("LIVEMODE: ", isLiveMode, currentLiveMode)
         console.log("LIVEMODE DATA: ")
         console.log("LIVEMODE DATA: ", historyRouteLive.length, prevРistoryRouteLiveLength, prevРistoryRouteLiveLength !== historyRouteLive.length)
-        
+
         if (currentView === "History") {
             // LIVEMODE
             if (historyRouteLive?.length > 1 && isLiveMode) {
@@ -227,7 +227,7 @@ const useLiveMode = (
                         latitude: Number(lastPoint.latitude) + (Number(lastPoint.latitude) - Number(firstPoint.latitude)),
                         longitude: Number(lastPoint.longitude) + (Number(lastPoint.longitude) - Number(firstPoint.longitude))
                     }
-                    
+
                     mapRef.current?.fitToCoordinates([...historyRouteLive, additionalPoint].map(mapLatLng), { edgePadding: { top: 20, left: 20, right: 20, bottom: 20 } });
 
                     // setTimeout(() => {
@@ -542,23 +542,24 @@ export default function VehicleSheet(props: VehicleSheetProps) {
             }
         }
     };
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! VehicleShee1t", !!vehicle)
+
     if (!vehicle) {
         return null
     }
 
-    
+
 
     return (
-        <PlatformProvider>
-            <BottomSheet
-                ref={bottomSheetItemRef}
-                index={vehicleSnapIndex}
-                snapPoints={snapPoints}
-                onChange={onChange}
-                handleComponent={HandleComponent}
-                style={styles.bottomSheet}
-            >
+
+        <BottomSheet
+            ref={bottomSheetItemRef}
+            index={vehicleSnapIndex}
+            snapPoints={snapPoints}
+            onChange={onChange}
+            handleComponent={HandleComponent}
+            style={styles.bottomSheet}
+        >
+            <BottomSheetView>
                 <View
                     style={{
                         justifyContent: "center",
@@ -632,8 +633,9 @@ export default function VehicleSheet(props: VehicleSheetProps) {
                         />,
                     ]}
                 </ScrollView>
-            </BottomSheet>
-        </PlatformProvider>
+            </BottomSheetView>
+        </BottomSheet>
+
     );
 }
 

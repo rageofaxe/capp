@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Platform, Text, View } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { useUnit } from "effector-react";
 import app from "../../app.json";
 import { HEIGHT_SCREEN, SAVED_LOGIN, SAVED_PASSWORD } from "../constants";
@@ -11,8 +11,7 @@ import { $strings } from "../models/settings/model";
 import { $accountName, clearVehicles, getAccountNameFx } from "../models/vehicles/model";
 import LogoSVG from "./SVG/Logo";
 
-export default function App() {
-    const { navigate } = useNavigation<any>();
+export default function MenuDrawer({ navigation }: DrawerContentComponentProps) {
     const accountName = useUnit($accountName);
     const strings = useUnit<any>($strings);
 
@@ -23,13 +22,13 @@ export default function App() {
     const logout = async () => {
         await AsyncStorage.setItem(SAVED_LOGIN, "");
         await AsyncStorage.setItem(SAVED_PASSWORD, "");
-        navigate("Login");
+        navigation.navigate("Login");
         clearVehicles();
         clearFilters();
     };
 
     const openSettings = () => {
-        navigate("Settings");
+        navigation.navigate("SettingsA");
     }
 
     return (

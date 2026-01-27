@@ -1,6 +1,5 @@
-import { combine, createEvent, createStore, Store } from "effector";
+import { combine, createEvent, createStore } from "effector";
 import { $vehicles } from "../vehicles/model";
-import { getAttentionLevel } from "../../../utils";
 
 // Utils
 
@@ -9,16 +8,19 @@ const mapVehicleType = (vehicleType: "truck" | "trailer") => (vehicle: App.Vehic
     return vehicle;
 };
 
-const mapVehicles = (vehicles: App.Vehicles) =>
-    [
-        ...vehicles.trucks.map(mapVehicleType("truck")),
-        ...vehicles.trailers.map(mapVehicleType("trailer")),
+const mapVehicles = (vehicles: App.Vehicles) => {
+    const coupledVehicles = (vehicles)
+    return [
+        ...coupledVehicles.trucks.map(mapVehicleType("truck")),
+        ...coupledVehicles.trailers.map(mapVehicleType("trailer")),
     ]
         .map((vehicle) => {
             vehicle.attentionLevel = vehicle.activity === "moving" ? "play" : "stop";
             return vehicle;
         })
         .filter((vehicle) => vehicle.last_status);
+}
+    
 
 const toggleButton = (state: any, payload: any) => (state === payload ? null : payload);
 

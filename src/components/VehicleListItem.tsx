@@ -17,6 +17,7 @@ import PauseSVG from "./SVG/Pause";
 import PlaySVG from "./SVG/Play";
 import RepairSVG from "./SVG/Repair";
 import StopSVG from "./SVG/Stop";
+import SatSVG from "./SVG/TripInfoSVG/Sat";
 import UnknownSVG from "./SVG/Unknown";
 import VehiclesSVG from "./SVG/Vehicles";
 
@@ -76,7 +77,12 @@ export default (props: App.Vehicle & { vehiclesSnapIndex: number; openVehicle: a
         .replaceAll("-", "__")
         .replaceAll(".", "") as keyof typeof VehiclesSVG;
 
+    const trailerIconName = props?.trailer?.single_svg_id
+        .replaceAll("-", "__")
+        .replaceAll(".", "") as keyof typeof VehiclesSVG;
+
     const VehicleIcon = VehiclesSVG[iconName];
+    const VehicleTrailerIcon = VehiclesSVG[trailerIconName];
 
     return (
         <GestureDetector gesture={tap}>
@@ -89,15 +95,22 @@ export default (props: App.Vehicle & { vehiclesSnapIndex: number; openVehicle: a
                             highlight={searchedText}
                             style={styles.displayName}
                         >
-                            {displayName}
+                            {displayName} {props.trailer && ` + ${props?.trailer?.display_name}`}
                         </HighlightText>
+                        {props.has_telematics && <SatSVG />}
                     </View>
-                    <View style={{ alignItems: "flex-end" }}>
+                    <View style={{ alignItems: "flex-end", flexDirection: "row", gap: 8 }}>
                         <VehicleIcon
                             height="25"
                             width="50"
                             preserveAspectRatio="xMinYMin slice"
                         />
+
+                        {props.trailer && <VehicleTrailerIcon
+                            height="25"
+                            width="100"
+                            preserveAspectRatio="xMinYMin slice"
+                        />}
                     </View>
                 </View>
                 {address && (
@@ -183,7 +196,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     row66: {
-        width: WIDTH - 32 - 64,
+        width: WIDTH - 128,
         overflow: "scroll",
     },
     rowBetween: {

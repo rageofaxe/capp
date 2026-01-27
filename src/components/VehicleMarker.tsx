@@ -1,4 +1,4 @@
-import { Platform, Text, View } from "react-native";
+import { Platform } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import styled from "styled-components/native";
 import { getAttentionLevel } from "../../utils";
@@ -27,9 +27,6 @@ export default function VehicleMarker(props: { vehicle: App.Vehicle, onPress: an
 
     return (
         <Wrapper>
-            <View>
-                <Text>####</Text>
-            </View>
             <Buble>
                 <Content>
                     <Icon style={{ marginLeft: 4 }} color={iconColor} />
@@ -70,7 +67,7 @@ const _Triangle = (props: any) => {
 
 const Wrapper = styled.View`
     position: relative;
-    top: ${Platform.select({ android: "0px", ios: "-20px" })};
+    top: ${Platform.select({ android: "-20px", ios: "-20px" })};
     padding: 0px;
     height: 80px;
     width: 100px;
