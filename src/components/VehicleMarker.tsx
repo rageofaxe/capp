@@ -139,7 +139,7 @@ const Buble = styled.View`
 `;
 
 const Triangle = styled(_Triangle)`
-    position: aboslute;
+    position: absolute;
     top: ${Platform.select({ android: "2px", ios: "4px" })};
 `;
 
