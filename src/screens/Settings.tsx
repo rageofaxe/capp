@@ -1,11 +1,14 @@
 
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 
 import { useNavigation } from "@react-navigation/native";
 import { useUnit } from "effector-react";
+import { Switch } from "react-native-gesture-handler";
+import RNPickerSelect from 'react-native-picker-select';
+import BackArrowSVG from "../components/SVG/BackArrow";
 import { HEIGHT } from "../constants";
 import "../models";
 import { $currentLiveMode, LiveModes, setCenterPoint, setCenterPointWithSegment, setCurrentLiveMode } from "../models/modes";
@@ -53,8 +56,8 @@ export default function Settings() {
     return (
         <GestureHandlerRootView style={styles.container}>
             <StatusBar style="dark" backgroundColor="#EAFAF1" />
-            <View><Text>123</Text></View>
-            {/* <View style={styles.container}>
+            
+            <View style={styles.container}>
                 <View style={[styles.row, { marginBottom: 48 }]}>
                     <TouchableOpacity onPress={back}><BackArrowSVG /></TouchableOpacity>
                     <View style={styles.titleView}>
@@ -95,7 +98,7 @@ export default function Settings() {
                         </View>
                     </RNPickerSelect>
                 </View>
-            </View> */}
+            </View>
         </GestureHandlerRootView>
     );
 }
