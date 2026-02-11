@@ -32,6 +32,7 @@ import "@/src/models";
 import {
     $filteredVehicles,
     $numberSorting,
+    $searchedText,
     $statusSorting,
 } from "@/src/models/filters/model";
 import { $historyRouteLive } from "@/src/models/history/autoupdate/model";
@@ -53,6 +54,7 @@ import moment from "moment";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import VehicleListSheet from "../components/BottomSheets/VehicleListSheet";
 import VehicleSheet from "../components/BottomSheets/VehicleSheet";
+import { $isArchivedVehicles } from "../models/settings/model";
 
 const INITIAL_REGION = {
     latitude: 52.5,
@@ -82,8 +84,6 @@ export default function App() {
         fitToSuppliedMarkers,
         closeVehicle,
     } = useApp();
-
-    console.log("vehiclesSnapIndex", vehiclesSnapIndex, bottomSheetListRef.current)
 
     const statusSorting = useUnit($statusSorting);
     const numberSorting = useUnit($numberSorting);
@@ -152,9 +152,14 @@ export default function App() {
 
     // @ts-ignore
     const unsortedVehicles = useUnit<App.Vehicle[]>($filteredVehicles);
+    
     // @ts-ignore
     const vehicleIDsString = unsortedVehicles.map((x) => x.id).join("-");
     const mapVehicles = useMemo(() => unsortedVehicles, [vehicleIDsString]);
+    const search = useUnit($searchedText)
+    const isArchivedVehicles = useUnit($isArchivedVehicles)
+
+    const filteredMapVehicles = mapVehicles.filter(v => !v.archived_at || search || isArchivedVehicles)
 
     const vehicles = statusSorting?.active
         ? unsortedVehicles.sort(sortByStatus(statusSorting))
@@ -162,7 +167,7 @@ export default function App() {
             ? unsortedVehicles.sort(sortByNumber(numberSorting))
             : unsortedVehicles;
 
-    const tracksViewChanges = false;
+    console.log("!!!!!!!!!!!unsortedVehicles", unsortedVehicles.length, vehicles.length)
 
     const zoomToSegment = (point: any) => {
         setLiveMode(false);
@@ -241,13 +246,13 @@ export default function App() {
                         left: 20,
                         right: 20,
                     })}
+                    key={vehicleId ? vehicleId : "map"}
                     renderCluster={(cluster) => {
                         const { id, geometry, onPress, properties } = cluster;
 
                         return (
                             <Marker
                                 key={`cluster-${id}`}
-                                tracksViewChanges={tracksViewChanges}
                                 coordinate={{
                                     longitude: geometry.coordinates[0],
                                     latitude: geometry.coordinates[1],
@@ -340,7 +345,7 @@ export default function App() {
                             ))}
                         </>
                     )}
-                    {mapVehicles
+                    {filteredMapVehicles
                         .filter(
                             (vehicle) =>
                                 !(
@@ -361,7 +366,6 @@ export default function App() {
                                     anchor={{ x: 0.15, y: 0.5 }}
                                     centerOffset={{ x: 45, y: 15 }}
                                     identifier={`marker-${vehicle.id}`}
-                                    tracksViewChanges={tracksViewChanges}
 
                                     onPress={() => openVehicle(vehicle)}
 

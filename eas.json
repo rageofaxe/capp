@@ -1,0 +1,42 @@
+{
+  "cli": {
+    "version": ">= 16.32.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true,
+      "node": "24.0.0",
+      "env": {
+        "EXPO_ASC_API_KEY_PATH": "./secrets/AuthKey_VZ6H2HHQ97.p8",
+        "EXPO_ASC_KEY_ID": "VZ6H2HHQ97",
+        "EXPO_ASC_ISSUER_ID": "bd044bba-aa21-44ad-9a47-d0592db8d55a",
+        "EXPO_APPLE_TEAM_ID": "269FWRYK4T",
+        "EXPO_APPLE_TEAM_TYPE": "INDIVIDUAL"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "dev@transinet.net",
+        "ascAppId": "6587570808",
+        "appleTeamId": "269FWRYK4T",
+        "ascApiKeyPath": "./secrets/AuthKey_VZ6H2HHQ97.p8",
+        "ascApiKeyIssuerId": "bd044bba-aa21-44ad-9a47-d0592db8d55a",
+        "ascApiKeyId": "VZ6H2HHQ97"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./secrets/playstore.json",
+        "releaseStatus": "draft"
+      }
+    }
+  }
+}

@@ -24,7 +24,7 @@ console.log("INIT");
 const Drawer = createDrawerNavigator<{
   Main: undefined;
   Login: undefined;
-  SettingsA: undefined
+  SettingsA: undefined;
 }>();
 
 export default () => {

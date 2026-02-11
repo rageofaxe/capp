@@ -67,10 +67,9 @@ const _Triangle = (props: any) => {
 
 const Wrapper = styled.View`
     position: relative;
-    top: ${Platform.select({ android: "-20px", ios: "-20px" })};
+    top: ${Platform.select({ android: "0px", ios: "-20px" })};
     padding: 0px;
     height: 80px;
-    width: 100px;
 `;
 
 const Content = styled.View`
@@ -139,7 +138,7 @@ const Buble = styled.View`
 `;
 
 const Triangle = styled(_Triangle)`
-    position: absolute;
+    position: aboslute;
     top: ${Platform.select({ android: "2px", ios: "4px" })};
 `;
 

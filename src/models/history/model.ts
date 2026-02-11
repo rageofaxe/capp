@@ -28,7 +28,6 @@ async function getStatuses(vehicleType: any, id: any, dateFrom: string, page = 1
     getOptions(cookie),
   ).then((result: any) => result.json());
   
-  console.log("RESULT", statuses)
   if (statuses.length === page * 5000) {
     return getStatuses(vehicleType, id, dateFrom, page + 1, [...initialStatuses, ...statuses])
   } else {

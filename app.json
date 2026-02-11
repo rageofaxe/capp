@@ -1,48 +1,67 @@
 {
   "expo": {
-    "name": "CApp",
-    "slug": "CApp",
-    "version": "1.0.0",
+    "name": "TRANSINET Control App",
+    "slug": "expoApp",
+    "version": "0.4.14",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "capp",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/appStore1x.png",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/logo-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "eu.transinet.controlapp",
+      "buildNumber": "101"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/playstore.png",
+        "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "package": "eu.transinet.controlapp",
+      "versionCode": 35
+    },
+    "packagerOpts": {
+      "url": "https://app.transinet.eu"
     },
     "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "68ce1034-dd96-4943-a663-fbebfe7cd50a"
+      }
     },
     "plugins": [
-      "expo-router",
       [
-        "expo-splash-screen",
+        "expo-build-properties",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
-          "dark": {
-            "backgroundColor": "#000000"
+          "ios": {
+            "deploymentTarget": "17.0"
           }
+        },
+        
+      ],
+      // "exclude": ["react-native-maps"],
+      [
+        "react-native-maps",
+        {
+          "androidGoogleMapsApiKey": "AIzaSyAP0DdcQ32RRsdOwGFx2IYC1v2SUxMNuwc"
         }
-      ]
+      ],
+      "expo-localization"
     ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
-    }
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/68ce1034-dd96-4943-a663-fbebfe7cd50a"
+    },
+    "owner": "transinet"
   }
 }
